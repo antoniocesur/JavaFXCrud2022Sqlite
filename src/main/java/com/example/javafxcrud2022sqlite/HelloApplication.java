@@ -18,6 +18,9 @@ public class HelloApplication extends Application {
     }
 
     public static void main(String[] args) {
+        RepositorioAlumnos r=new RepositorioAlumnos();
+        Alumno a=new Alumno();
+        r.inserta(a);
         launch();
     }
 }
