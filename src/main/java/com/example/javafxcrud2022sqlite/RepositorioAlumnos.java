@@ -3,6 +3,7 @@ package com.example.javafxcrud2022sqlite;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class RepositorioAlumnos {
@@ -35,6 +36,28 @@ public class RepositorioAlumnos {
             sqlException.printStackTrace();
         }
     }
+
+    public ArrayList<Alumno> leerTodos(){
+        ArrayList<Alumno> lista=null;
+        try {
+            PreparedStatement ps=conexion.prepareStatement("SELECT * FROM alumnos");
+            ResultSet rs=ps.executeQuery();
+            lista=new ArrayList<>();
+            while(rs.next()){
+                Alumno aux=new Alumno();
+                aux.setId(rs.getInt("id"));
+                aux.setDni(rs.getString("dni"));
+                aux.setNombre(rs.getString("nombre"));
+                aux.setApellidos(rs.getString("apellidos"));
+                aux.setFechaNacimiento(LocalDate.parse(rs.getString("fecha_nacimiento")));
+                lista.add(aux);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return lista;
+    }
     public void inserta(Alumno a){
         PreparedStatement sentencia = null;
         String sentenciaSql = "INSERT INTO alumnos (nombre, apellidos, dni, fecha_nacimiento) VALUES (?, ?, ?, ?)";
@@ -46,6 +69,9 @@ public class RepositorioAlumnos {
             //sentencia.setString(4, DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH).format(LocalDate.now()));
             sentencia.setString(4, DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH).format(a.getFechaNacimiento()));
             sentencia.executeUpdate();
+
+            ResultSet rs = sentencia.getGeneratedKeys();
+            a.setId(rs.getInt(1));
 
         } catch (SQLException sqle) {
             sqle.printStackTrace();

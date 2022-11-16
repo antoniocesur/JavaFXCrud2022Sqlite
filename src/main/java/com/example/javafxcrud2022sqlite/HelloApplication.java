@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class HelloApplication extends Application {
     @Override
@@ -21,6 +22,10 @@ public class HelloApplication extends Application {
         RepositorioAlumnos r=new RepositorioAlumnos();
         Alumno a=new Alumno();
         r.inserta(a);
+        ArrayList<Alumno> lista=r.leerTodos();
+        for(Alumno aux:lista){
+            System.out.println(aux.toString());
+        }
         launch();
     }
 }

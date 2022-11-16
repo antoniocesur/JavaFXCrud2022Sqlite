@@ -3,8 +3,10 @@ package com.example.javafxcrud2022sqlite;
 import java.time.LocalDate;
 
 public class Alumno {
+    private int id;
     private String nombre;
     private String apellidos;
+
     private String dni;
     private LocalDate fechaNacimiento;
 
@@ -45,5 +47,23 @@ public class Alumno {
 
     public void setFechaNacimiento(LocalDate fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
+    }
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Alumno{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", apellidos='" + apellidos + '\'' +
+                ", dni='" + dni + '\'' +
+                ", fechaNacimiento=" + fechaNacimiento +
+                '}';
     }
 }
